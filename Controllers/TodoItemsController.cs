@@ -12,7 +12,6 @@ namespace todo_batch2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [EnableCors("AllowMyOrigin")]
     public class TodoItemsController : ControllerBase
     {
         private readonly TodoContext _context;

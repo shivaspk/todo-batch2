@@ -29,10 +29,7 @@ namespace todo_batch2
         {
 
             services.AddControllers();
-           services.AddCors(options => {
-               options.AddPolicy("AllowMyOrigin",
-               builder => builder.WithOrigins("*"));
-           });
+           services.AddCors();
             services.AddDbContext<TodoContext>(opt => opt.UseInMemoryDatabase("TodoList"));
             services.AddSwaggerGen(c =>
             {
@@ -53,7 +50,13 @@ namespace todo_batch2
 
             app.UseRouting();
 
-            app.UseCors("AllowMyOrigin");
+             // global cors policy
+            app.UseCors(x => x
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true) // allow any origin
+                .AllowCredentials()); // allow credentials
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
